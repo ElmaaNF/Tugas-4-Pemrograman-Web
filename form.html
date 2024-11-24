@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pendaftaran</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function validateForm() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const bio = document.getElementById('bio').value;
+            const file = document.getElementById('file').files[0];
+
+            if (name.length < 3) {
+                alert("Nama harus minimal 3 karakter.");
+                return false;
+            }
+            if (!email.includes('@')) {
+                alert("Email tidak valid.");
+                return false;
+            }
+            if (password.length < 6) {
+                alert("Password harus minimal 6 karakter.");
+                return false;
+            }
+            if (bio.trim() === "") {
+                alert("Biografi tidak boleh kosong.");
+                return false;
+            }
+            if (!file) {
+                alert("File harus diunggah.");
+                return false;
+            }
+            if (file.size > 1024 * 1024) { // Maksimal 1MB
+                alert("Ukuran file maksimal 1MB.");
+                return false;
+            }
+            if (!file.name.endsWith('.txt')) {
+                alert("Hanya file teks (.txt) yang diperbolehkan.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h2>Form Pendaftaran</h2>
+    <form action="process.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <label for="name">Nama:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <label for="bio">Biografi:</label>
+        <textarea id="bio" name="bio" required></textarea>
+        
+        <label for="file">Unggah File (.txt):</label>
+        <input type="file" id="file" name="file" accept=".txt" required>
+        
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
